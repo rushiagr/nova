@@ -19,7 +19,7 @@
 Volume driver for NetApp storage systems.
 
 This driver requires NetApp OnCommand 5.0 and one or more Data
-ONTAP 7-mode storage systems with installed iSCSI licenses.
+ONTAP 7-mode or Cluster-mode storage systems with installed iSCSI licenses.
 
 """
 
