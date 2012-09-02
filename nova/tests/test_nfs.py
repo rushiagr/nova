@@ -52,7 +52,7 @@ class NfsDriverTestCase(test.TestCase):
     TEST_MNT_POINT_BASE = '/mnt/test'
     TEST_LOCAL_PATH = '/mnt/nfs/volume-123'
     TEST_FILE_NAME = 'test.txt'
-    TEST_SHARES_CONFIG_FILE = '/etc/cinder/test-shares.conf'
+    TEST_SHARES_CONFIG_FILE = '/etc/nova/test-shares.conf'
     ONE_GB_IN_BYTES = 1024 * 1024 * 1024
 
     def setUp(self):
