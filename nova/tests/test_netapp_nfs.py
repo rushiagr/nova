@@ -258,4 +258,3 @@ class NetappNfsDriverTestCase(test.TestCase):
                           volume_name, clone_name, volume_id)
 
         mox.VerifyAll()
-

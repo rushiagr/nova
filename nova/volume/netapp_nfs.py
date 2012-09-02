@@ -264,4 +264,3 @@ class NetAppNFSDriver(nfs.NfsDriver):
         """
         return os.path.join(self._get_mount_point_for_share(nfs_share),
                             volume_name)
-

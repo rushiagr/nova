@@ -626,4 +626,3 @@ class NfsDriverTestCase(test.TestCase):
         drv.delete_volume(volume)
 
         mox.VerifyAll()
-

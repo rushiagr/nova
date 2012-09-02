@@ -55,13 +55,10 @@ netapp_opts = [
     cfg.IntOpt('netapp_server_port',
                default=8088,
                help='Port number for the DFM server'),
-    cfg.StrOpt('netapp_storage_service',
-               default=None,
-               help='Storage service to use for provisioning'),
     cfg.StrOpt('netapp_storage_service_prefix',
                default=None,
                help=('Prefix of storage service name to use for '
-                    'provisioning (volume_type name will be appended)')),   #TODO remove netapp_storage_service
+                    'provisioning (volume_type name will be appended)')),
     cfg.StrOpt('netapp_vfiler',
                default=None,
                help='Vfiler to use for provisioning'),
@@ -69,6 +66,7 @@ netapp_opts = [
 
 FLAGS = flags.FLAGS
 FLAGS.register_opts(netapp_opts)
+
 
 class DfmDataset(object):
     def __init__(self, id, name, project, type):
@@ -1011,7 +1009,8 @@ class NetAppLun(object):
         name = self.name
         msg = _("No metadata property %(prop)s defined for the LUN %(name)s")
         LOG.debug(msg % locals())
-        
+
+
 class NetAppCmodeISCSIDriver(driver.ISCSIDriver):
     """NetApp C-mode iSCSI volume driver."""
 
