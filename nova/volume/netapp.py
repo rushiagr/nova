@@ -1012,7 +1012,8 @@ class NetAppLun(object):
         name = self.name
         msg = _("No metadata property %(prop)s defined for the LUN %(name)s")
         LOG.debug(msg % locals())
-        
+
+
 class NetAppCmodeISCSIDriver(driver.ISCSIDriver):
     """NetApp C-mode iSCSI volume driver."""
 

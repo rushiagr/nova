@@ -15,15 +15,15 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import os
-import errno
 import ctypes
+import errno
+import os
 
+from nova import exception
 from nova import flags
 from nova.openstack.common import cfg
 from nova.openstack.common import log as logging
 from nova.volume import driver
-from nova import exception
 
 LOG = logging.getLogger(__name__)
 

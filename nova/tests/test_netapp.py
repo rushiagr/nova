@@ -990,9 +990,6 @@ class NetAppDriverTestCase(test.TestCase):
         self.driver.terminate_connection(volume, connector)
         self.driver._remove_destroy(self.VOLUME_NAME, self.PROJECT_ID)
 
-
-
-
 WSDL_HEADER_CMODE = """<?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
  xmlns:na="http://cloud.netapp.com/"

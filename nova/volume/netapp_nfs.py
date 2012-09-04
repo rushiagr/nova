@@ -19,16 +19,16 @@ Volume driver for NetApp NFS storage.
 """
 
 import os
-import time
 import suds
 from suds.sax import text
+import time
 
 from nova import exception
 from nova import flags
 from nova.openstack.common import cfg
 from nova.openstack.common import log as logging
-from nova.volume import nfs
 from nova.volume.netapp import netapp_opts
+from nova.volume import nfs
 
 LOG = logging.getLogger(__name__)
 
@@ -264,4 +264,3 @@ class NetAppNFSDriver(nfs.NfsDriver):
         """
         return os.path.join(self._get_mount_point_for_share(nfs_share),
                             volume_name)
-
