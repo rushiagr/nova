@@ -52,9 +52,7 @@ class NfsVolumeDriver(volume.LibvirtVolumeDriver):
         connection_info['data']['device_path'] = path
         conf = super(NfsVolumeDriver, self).connect_volume(connection_info,
                                                            mount_device)
-        print conf
-        conf = conf.replace('block', 'file')
-        print conf
+        conf = conf.replace('block', 'file', 1)     # Not the best way to do
         return conf
 
     def disconnect_volume(self, connection_info, mount_device):
