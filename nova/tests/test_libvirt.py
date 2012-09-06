@@ -45,6 +45,7 @@ from nova.virt import firewall as base_firewall
 from nova.virt.libvirt import connection
 from nova.virt.libvirt import firewall
 from nova.virt.libvirt import volume
+from nova.virt.libvirt import volume_nfs
 from nova.volume import driver as volume_driver
 from nova.virt.libvirt import utils as libvirt_utils
 from nova.tests import fake_network
@@ -314,6 +315,31 @@ class LibvirtVolumeTestCase(test.TestCase):
         self.assertEqual(tree.find('./source').get('dev'), dev_str)
         libvirt_driver.disconnect_volume(connection_info, mount_device)
         connection_info = vol_driver.terminate_connection(vol, self.connr)
+
+    def test_libvirt_nfs_driver(self):
+        # NOTE(vish) exists is to make driver assume connecting worked
+        mnt_base = '/mnt'
+        self.flags(nfs_mount_point_base=mnt_base)
+
+        libvirt_driver = volume_nfs.NfsVolumeDriver(self.fake_conn)
+        export_string = '192.168.1.1:/nfs/share1'
+        name = 'volume-00001'
+        export_mnt_base = os.path.join(mnt_base,
+                libvirt_driver.get_hash_str(export_string))
+        file_path = os.path.join(export_mnt_base, name)
+
+        connection_info = {'data': {'export': export_string, 'name': name}}
+        mount_device = "vde"
+        conf = libvirt_driver.connect_volume(connection_info, mount_device)
+        tree = ElementTree.fromstring(conf)
+        self.assertEqual(tree.get('type'), 'file')
+        self.assertEqual(tree.find('./source').get('dev'), file_path)
+        libvirt_driver.disconnect_volume(connection_info, mount_device)
+
+        expected_commands = [
+            ('stat', export_mnt_base),
+            ('mount', '-t', 'nfs', export_string, export_mnt_base)]
+        self.assertEqual(self.executes, expected_commands)
 
 
 class CacheConcurrencyTestCase(test.TestCase):
