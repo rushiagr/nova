@@ -15,15 +15,16 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import os
-import errno
 import ctypes
+import errno
+import os
 
+from nova import exception
 from nova import flags
 from nova.openstack.common import cfg
 from nova import log as logging
 from nova.volume import driver
-from nova import exception
+from nova.virt.libvirt import volume_nfs
 
 LOG = logging.getLogger("nova.volume.driver")
 
@@ -31,9 +32,6 @@ volume_opts = [
     cfg.StrOpt('nfs_shares_config',
                 default=None,
                 help='File with the list of available nfs shares'),
-    cfg.StrOpt('nfs_mount_point_base',
-               default='$state_path/mnt',
-               help='Base dir where nfs expected to be mounted'),
     cfg.StrOpt('nfs_disk_util',
                default='df',
                help='Use du or df for free space calculation'),
