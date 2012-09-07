@@ -17,12 +17,13 @@
 """Unit tests for the NetApp-specific NFS driver module (netapp_nfs)"""
 
 from nova import context
-from nova import test
 from nova import exception
+from nova import test
 
 from nova.volume import netapp_nfs
 from nova.volume import netapp
 from nova.volume import nfs
+
 from mox import IsA
 from mox import IgnoreArg
 from mox import MockObject

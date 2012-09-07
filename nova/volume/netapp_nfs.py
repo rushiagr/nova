@@ -19,9 +19,9 @@ Volume driver for NetApp NFS storage.
 """
 
 import os
-import time
 import suds
 from suds.sax import text
+import time
 
 from nova import exception
 from nova import flags

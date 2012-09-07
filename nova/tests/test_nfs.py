@@ -16,13 +16,13 @@
 #    under the License.
 """Unit tests for the NFS driver module"""
 
-import os
-import errno
 import __builtin__
+import errno
+import os
 
 import mox as mox_lib
-from mox import IsA
 from mox import IgnoreArg
+from mox import IsA
 from mox import stubout
 
 from nova import context
