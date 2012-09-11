@@ -27,6 +27,8 @@ from nova.openstack.common import cfg
 from nova import utils
 from nova.virt.libvirt import volume
 
+from xml.etree.ElementTree import XML, fromstring, tostring
+
 LOG = logging.getLogger(__name__)
 
 volume_opts = [
@@ -52,7 +54,12 @@ class NfsVolumeDriver(volume.LibvirtVolumeDriver):
         connection_info['data']['device_path'] = path
         conf = super(NfsVolumeDriver, self).connect_volume(connection_info,
                                                            mount_device)
-        conf = conf.replace('block', 'file', 1)     # Not the best way to do
+        root = fromstring(conf)
+        root.attrib['type'] = 'file'
+        # NOTE: The function tostring() will output xml as string with values
+        #       surrounded by double quotes. The original xml (returned by
+        #       connect_volume) contained values surrounded by single quotes!
+        conf = tostring(root)   
         return conf
 
     def disconnect_volume(self, connection_info, mount_device):
