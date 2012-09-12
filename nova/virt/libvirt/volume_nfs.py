@@ -59,7 +59,7 @@ class NfsVolumeDriver(volume.LibvirtVolumeDriver):
         # NOTE: The function tostring() will output xml as string with values
         #       surrounded by double quotes. The original xml (returned by
         #       connect_volume) contained values surrounded by single quotes!
-        conf = tostring(root)   
+        conf = tostring(root)
         return conf
 
     def disconnect_volume(self, connection_info, mount_device):
