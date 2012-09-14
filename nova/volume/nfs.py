@@ -17,6 +17,7 @@
 
 import ctypes
 import errno
+import hashlib
 import os
 
 from nova import exception
@@ -289,5 +290,6 @@ class NfsDriver(driver.VolumeDriver):
                 raise
 
     def _get_hash_str(self, base_str):
-        """returns string that represents hash of base_str (in a hex format)"""
-        return str(ctypes.c_uint64(hash(base_str)).value)
+        """returns string that represents hash of base_str"""
+        hash_str_hex = hashlib.md5(base_str).hexdigest()
+        return str(int(hash_str_hex, 16))
