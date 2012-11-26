@@ -15,8 +15,8 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-import ctypes
 import errno
+import hashlib
 import os
 
 from nova import exception
@@ -26,7 +26,7 @@ from nova import log as logging
 from nova.volume import driver
 from nova.virt.libvirt import volume_nfs
 
-LOG = logging.getLogger("nova.volume.driver")
+LOG = logging.getLogger(__name__)
 
 volume_opts = [
     cfg.StrOpt('nfs_shares_config',
@@ -39,8 +39,7 @@ volume_opts = [
                 default=True,
                 help=('Create volumes as sparsed files which take no space.'
                       'If set to False volume is created as regular file.'
-                      'In such case volume creation takes a lot of time.'))
-]
+                      'In such case volume creation takes a lot of time.'))]
 
 FLAGS = flags.FLAGS
 FLAGS.register_opts(volume_opts)
@@ -134,7 +133,7 @@ class NfsDriver(driver.VolumeDriver):
             'data': data
         }
 
-    def terminate_connection(self, volume, connector):
+    def terminate_connection(self, volume, connector, **kwargs):
         """Disallow connection from connector"""
         pass
 
@@ -193,7 +192,7 @@ class NfsDriver(driver.VolumeDriver):
                 self._ensure_share_mounted(share)
                 self._mounted_shares.append(share)
             except Exception, exc:
-                LOG.warning('Exception during mounting %s' % (exc,))
+                LOG.warning(_('Exception during mounting %s' % (exc,)))
 
         LOG.debug('Available shares %s' % str(self._mounted_shares))
 
@@ -228,7 +227,7 @@ class NfsDriver(driver.VolumeDriver):
 
         if volume_size_for * 1024 * 1024 * 1024 > greatest_size:
             raise exception.NfsNoSuitableShareFound(
-                    volume_size=volume_size_for)
+                volume_size=volume_size_for)
         return greatest_share
 
     def _get_mount_point_for_share(self, nfs_share):
@@ -289,4 +288,4 @@ class NfsDriver(driver.VolumeDriver):
 
     def _get_hash_str(self, base_str):
         """returns string that represents hash of base_str (in a hex format)"""
-        return str(ctypes.c_uint64(hash(base_str)).value)
+        return hashlib.md5(base_str).hexdigest()

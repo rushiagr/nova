@@ -37,7 +37,7 @@ from nova.openstack.common import cfg
 from nova.volume import driver
 from nova.volume import volume_types
 
-LOG = logging.getLogger("nova.volume.driver")
+LOG = logging.getLogger(__name__)
 
 netapp_opts = [
     cfg.StrOpt('netapp_wsdl_url',
