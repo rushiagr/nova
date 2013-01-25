@@ -1029,3 +1029,15 @@ class InvalidInstanceIDMalformed(Invalid):
 
 class CouldNotFetchImage(NovaException):
     message = _("Could not fetch image %(image)s")
+
+
+class NfsException(NovaException):
+    message = _("Unknown NFS exception")
+
+
+class NfsNoSharesMounted(NotFound):
+    message = _("No mounted NFS shares found")
+
+
+class NfsNoSuitableShareFound(NotFound):
+    message = _("There is no share which can host %(volume_size)sG")
